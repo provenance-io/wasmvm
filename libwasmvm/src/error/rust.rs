@@ -1,4 +1,4 @@
-use cosmwasm_vm::VmError;
+use prov_cosmwasm_vm::VmError;
 use errno::{set_errno, Errno};
 #[cfg(feature = "backtraces")]
 use std::backtrace::Backtrace;
@@ -218,7 +218,7 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use cosmwasm_vm::{BackendError, Checksum};
+    use prov_cosmwasm_vm::{BackendError, Checksum};
     use errno::errno;
     use std::str;
 

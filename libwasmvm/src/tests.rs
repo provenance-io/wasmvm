@@ -3,9 +3,9 @@
 use serde::{Deserialize, Serialize};
 use tempfile::TempDir;
 
-use cosmwasm_std::coins;
-use cosmwasm_vm::testing::{mock_backend, mock_env, mock_info, mock_instance_with_gas_limit};
-use cosmwasm_vm::{
+use prov_cosmwasm_std::coins;
+use prov_cosmwasm_vm::testing::{mock_backend, mock_env, mock_info, mock_instance_with_gas_limit};
+use prov_cosmwasm_vm::{
     call_execute_raw, call_instantiate_raw, features_from_csv, to_vec, Cache, CacheOptions,
     InstanceOptions, Size,
 };

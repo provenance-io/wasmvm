@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 use std::convert::TryInto;
 
-use cosmwasm_std::{Order, Record};
-use cosmwasm_vm::{BackendError, BackendResult, GasInfo, Storage};
+use prov_cosmwasm_std::{Order, Record};
+use prov_cosmwasm_vm::{BackendError, BackendResult, GasInfo, Storage};
 
 use crate::db::Db;
 use crate::error::GoResult;

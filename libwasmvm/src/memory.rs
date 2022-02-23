@@ -137,7 +137,7 @@ impl U8SliceView {
 /// Transferring ownership from Go to Rust using return value pointers:
 ///
 /// ```rust
-/// # use cosmwasm_vm::{BackendResult, GasInfo};
+/// # use prov_cosmwasm_vm::{BackendResult, GasInfo};
 /// # use wasmvm::{Db, GoResult, U8SliceView, UnmanagedVector};
 /// fn db_read(db: &Db, key: &[u8]) -> BackendResult<Option<Vec<u8>>> {
 ///

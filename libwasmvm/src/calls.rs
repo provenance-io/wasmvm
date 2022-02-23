@@ -3,7 +3,7 @@
 use std::convert::TryInto;
 use std::panic::{catch_unwind, AssertUnwindSafe};
 
-use cosmwasm_vm::{
+use prov_cosmwasm_vm::{
     call_execute_raw, call_ibc_channel_close_raw, call_ibc_channel_connect_raw,
     call_ibc_channel_open_raw, call_ibc_packet_ack_raw, call_ibc_packet_receive_raw,
     call_ibc_packet_timeout_raw, call_instantiate_raw, call_migrate_raw, call_query_raw,

@@ -3,7 +3,7 @@ use std::convert::TryInto;
 use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::str::from_utf8;
 
-use cosmwasm_vm::{features_from_csv, Cache, CacheOptions, Checksum, Size};
+use prov_cosmwasm_vm::{features_from_csv, Cache, CacheOptions, Checksum, Size};
 
 use crate::api::GoApi;
 use crate::args::{CACHE_ARG, CHECKSUM_ARG, DATA_DIR_ARG, FEATURES_ARG, WASM_ARG};
@@ -198,9 +198,9 @@ pub struct AnalysisReport {
     pub required_features: UnmanagedVector,
 }
 
-impl From<cosmwasm_vm::AnalysisReport> for AnalysisReport {
-    fn from(report: cosmwasm_vm::AnalysisReport) -> Self {
-        let cosmwasm_vm::AnalysisReport {
+impl From<prov_cosmwasm_vm::AnalysisReport> for AnalysisReport {
+    fn from(report: prov_cosmwasm_vm::AnalysisReport) -> Self {
+        let prov_cosmwasm_vm::AnalysisReport {
             has_ibc_entry_points,
             required_features,
         } = report;
@@ -258,11 +258,11 @@ pub struct Metrics {
     pub size_memory_cache: u64,
 }
 
-impl From<cosmwasm_vm::Metrics> for Metrics {
-    fn from(report: cosmwasm_vm::Metrics) -> Self {
-        let cosmwasm_vm::Metrics {
+impl From<prov_cosmwasm_vm::Metrics> for Metrics {
+    fn from(report: prov_cosmwasm_vm::Metrics) -> Self {
+        let prov_cosmwasm_vm::Metrics {
             stats:
-                cosmwasm_vm::Stats {
+                prov_cosmwasm_vm::Stats {
                     hits_pinned_memory_cache,
                     hits_memory_cache,
                     hits_fs_cache,

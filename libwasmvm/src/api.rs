@@ -1,4 +1,4 @@
-use cosmwasm_vm::{BackendApi, BackendError, BackendResult, GasInfo};
+use prov_cosmwasm_vm::{BackendApi, BackendError, BackendResult, GasInfo};
 
 use crate::error::GoResult;
 use crate::memory::{U8SliceView, UnmanagedVector};

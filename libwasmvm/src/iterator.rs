@@ -1,5 +1,5 @@
-use cosmwasm_std::Record;
-use cosmwasm_vm::{BackendError, BackendResult, GasInfo};
+use prov_cosmwasm_std::Record;
+use prov_cosmwasm_vm::{BackendError, BackendResult, GasInfo};
 
 use crate::error::GoResult;
 use crate::gas_meter::gas_meter_t;

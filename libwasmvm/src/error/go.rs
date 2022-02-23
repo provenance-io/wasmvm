@@ -1,4 +1,4 @@
-use cosmwasm_vm::BackendError;
+use prov_cosmwasm_vm::BackendError;
 use std::fmt;
 
 use crate::memory::UnmanagedVector;
