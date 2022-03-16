@@ -1,9 +1,9 @@
 .PHONY: all build build-rust build-go test
 
 # Builds the Rust library libwasmvm
-BUILDERS_PREFIX := cosmwasm/go-ext-builder:0008
+BUILDERS_PREFIX := cosmwasm/go-ext-builder:0009
 # Contains a full Go dev environment in order to run Go tests on the built library
-ALPINE_TESTER := cosmwasm/go-ext-builder:0008-alpine
+ALPINE_TESTER := cosmwasm/go-ext-builder:0009-alpine
 
 USER_ID := $(shell id -u)
 USER_GROUP = $(shell id -g)
@@ -48,10 +48,12 @@ build-go:
 	go build ./...
 
 test:
-	RUST_BACKTRACE=1 go test -v ./api ./types .
+	# Use package list mode to include all subdirectores. The -count=1 turns off caching.
+	RUST_BACKTRACE=1 go test -v -count=1 ./...
 
 test-safety:
-	GODEBUG=cgocheck=2 go test -race -v -count 1 ./api
+	# Use package list mode to include all subdirectores. The -count=1 turns off caching.
+	GODEBUG=cgocheck=2 go test -race -v -count=1 ./...
 
 # Creates a release build in a containerized build environment of the static library for Alpine Linux (.a)
 release-build-alpine:
@@ -61,8 +63,9 @@ release-build-alpine:
 	cp libwasmvm/target/release/examples/libmuslc.a api/libwasmvm_muslc.a
 	make update-bindings
 	# try running go tests using this lib with muslc
-	docker run --rm -u $(USER_ID):$(USER_GROUP) -v $(shell pwd):/mnt/testrun -w /mnt/testrun $(ALPINE_TESTER) go build -tags muslc .
-	docker run --rm -u $(USER_ID):$(USER_GROUP) -v $(shell pwd):/mnt/testrun -w /mnt/testrun $(ALPINE_TESTER) go test -tags muslc ./api ./types
+	docker run --rm -u $(USER_ID):$(USER_GROUP) -v $(shell pwd):/mnt/testrun -w /mnt/testrun $(ALPINE_TESTER) go build -tags muslc ./...
+	# Use package list mode to include all subdirectores. The -count=1 turns off caching.
+	docker run --rm -u $(USER_ID):$(USER_GROUP) -v $(shell pwd):/mnt/testrun -w /mnt/testrun $(ALPINE_TESTER) go test -tags muslc -count=1 ./...
 
 # Creates a release build in a containerized build environment of the shared library for glibc Linux (.so)
 release-build-linux:
@@ -73,10 +76,10 @@ release-build-linux:
 
 # Creates a release build in a containerized build environment of the shared library for macOS (.dylib)
 release-build-macos:
-	rm -rf libwasmvm/target/release
-	docker run --rm -u $(USER_ID):$(USER_GROUP) -v $(shell pwd)/libwasmvm:/code $(BUILDERS_PREFIX)-cross
-	cp libwasmvm/target/x86_64-apple-darwin/release/deps/libwasmvm.dylib api
-	cp libwasmvm/bindings.h api
+	rm -rf libwasmvm/target/x86_64-apple-darwin/release
+	rm -rf libwasmvm/target/aarch64-apple-darwin/release
+	docker run --rm -u $(USER_ID):$(USER_GROUP) -v $(shell pwd)/libwasmvm:/code $(BUILDERS_PREFIX)-cross build_macos.sh
+	cp libwasmvm/artifacts/libwasmvm.dylib api
 	make update-bindings
 
 update-bindings:

@@ -208,7 +208,7 @@ func TestGetMetrics(t *testing.T) {
 	assert.Equal(t, &types.Metrics{
 		HitsFsCache:         1,
 		ElementsMemoryCache: 1,
-		SizeMemoryCache:     5549819,
+		SizeMemoryCache:     5622877,
 	}, metrics)
 
 	// Instantiate 2
@@ -223,7 +223,7 @@ func TestGetMetrics(t *testing.T) {
 		HitsMemoryCache:     1,
 		HitsFsCache:         1,
 		ElementsMemoryCache: 1,
-		SizeMemoryCache:     5549819,
+		SizeMemoryCache:     5622877,
 	}, metrics)
 
 	// Pin
@@ -238,8 +238,8 @@ func TestGetMetrics(t *testing.T) {
 		HitsFsCache:               1,
 		ElementsPinnedMemoryCache: 1,
 		ElementsMemoryCache:       1,
-		SizePinnedMemoryCache:     5549819,
-		SizeMemoryCache:           5549819,
+		SizePinnedMemoryCache:     5622877,
+		SizeMemoryCache:           5622877,
 	}, metrics)
 
 	// Instantiate 3
@@ -256,8 +256,8 @@ func TestGetMetrics(t *testing.T) {
 		HitsFsCache:               1,
 		ElementsPinnedMemoryCache: 1,
 		ElementsMemoryCache:       1,
-		SizePinnedMemoryCache:     5549819,
-		SizeMemoryCache:           5549819,
+		SizePinnedMemoryCache:     5622877,
+		SizeMemoryCache:           5622877,
 	}, metrics)
 
 	// Unpin
@@ -274,7 +274,7 @@ func TestGetMetrics(t *testing.T) {
 		ElementsPinnedMemoryCache: 0,
 		ElementsMemoryCache:       1,
 		SizePinnedMemoryCache:     0,
-		SizeMemoryCache:           5549819,
+		SizeMemoryCache:           5622877,
 	}, metrics)
 
 	// Instantiate 4
@@ -292,7 +292,7 @@ func TestGetMetrics(t *testing.T) {
 		ElementsPinnedMemoryCache: 0,
 		ElementsMemoryCache:       1,
 		SizePinnedMemoryCache:     0,
-		SizeMemoryCache:           5549819,
+		SizeMemoryCache:           5622877,
 	}, metrics)
 }
 
@@ -319,7 +319,7 @@ func TestInstantiate(t *testing.T) {
 	res, cost, err := Instantiate(cache, checksum, env, info, msg, &igasMeter, store, api, &querier, TESTING_GAS_LIMIT, TESTING_PRINT_DEBUG)
 	require.NoError(t, err)
 	requireOkResponse(t, res, 0)
-	assert.Equal(t, uint64(0x12dbfa210), cost)
+	assert.Equal(t, uint64(0x12dcb13c0), cost)
 
 	var result types.ContractResult
 	err = json.Unmarshal(res, &result)
@@ -350,7 +350,7 @@ func TestExecute(t *testing.T) {
 	diff := time.Now().Sub(start)
 	require.NoError(t, err)
 	requireOkResponse(t, res, 0)
-	assert.Equal(t, uint64(0x12dbfa210), cost)
+	assert.Equal(t, uint64(0x12dcb13c0), cost)
 	t.Logf("Time (%d gas): %s\n", cost, diff)
 
 	// execute with the same store
@@ -414,7 +414,7 @@ func TestExecuteCpuLoop(t *testing.T) {
 	diff := time.Now().Sub(start)
 	require.NoError(t, err)
 	requireOkResponse(t, res, 0)
-	assert.Equal(t, uint64(0x12dbfa210), cost)
+	assert.Equal(t, uint64(0x12dcb13c0), cost)
 	t.Logf("Time (%d gas): %s\n", cost, diff)
 
 	// execute a cpu loop
@@ -565,7 +565,7 @@ func TestMultipleInstances(t *testing.T) {
 	require.NoError(t, err)
 	requireOkResponse(t, res, 0)
 	// we now count wasm gas charges and db writes
-	assert.Equal(t, uint64(0x12b9c9b00), cost)
+	assert.Equal(t, uint64(0x12ba80cb0), cost)
 
 	// instance2 controlled by mary
 	gasMeter2 := NewMockGasMeter(TESTING_GAS_LIMIT)
@@ -576,10 +576,10 @@ func TestMultipleInstances(t *testing.T) {
 	res, cost, err = Instantiate(cache, checksum, env, info, msg, &igasMeter2, store2, api, &querier, TESTING_GAS_LIMIT, TESTING_PRINT_DEBUG)
 	require.NoError(t, err)
 	requireOkResponse(t, res, 0)
-	assert.Equal(t, uint64(0x12cd87660), cost)
+	assert.Equal(t, uint64(0x12ce3e810), cost)
 
 	// fail to execute store1 with mary
-	resp := exec(t, cache, checksum, "mary", store1, api, querier, 0x114691bc0)
+	resp := exec(t, cache, checksum, "mary", store1, api, querier, 0x1145ff400)
 	require.Equal(t, "Unauthorized", resp.Err)
 
 	// succeed to execute store1 with fred
